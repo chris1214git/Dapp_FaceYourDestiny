@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { Row, Col, Card, Icon } from 'antd';
+import { Row, Col, Icon } from 'antd';
 
 const emperorCard = require('./emperorCard.jpg');
 const citizenCard = require('./citizenCard.jpg');
@@ -9,9 +9,14 @@ const pokerBackCard = require('./picture/pokerBack.png');
 const cardHeight = 200;
 const cardWidth = 120;
 
-let poolprice = 10000;
-let enemy_emj = 0;
-let enemy_card = 0;
+// let enemy_emj = 0;
+// let enemy_card = 0;
+
+let cardTypes = [];
+cardTypes.push(pokerBackCard);
+cardTypes.push(slaveCard);
+cardTypes.push(citizenCard);
+cardTypes.push(emperorCard);
 
 class Game extends Component {
 	constructor(props) {
@@ -22,7 +27,10 @@ class Game extends Component {
 		this.state = {
 			myName: name,
 			cardstate: cardstate,
-			finish: true//false
+			finish: true,//false
+			enemyCardType: 0, //0->none 1->slave 2->citizen 3->emperor
+			enemyNickName: this.props.enemyNickName,
+			poolSize: this.props.poolSize
 		};
 	}
 
@@ -38,7 +46,7 @@ class Game extends Component {
 			<Col span={4}>
 				<button type="button" >
 					<img src={cardType} height={cardHeight} width={cardWidth}
-						onClick={() => this.clickCard(i)} />
+						onClick={() => this.clickCard(i)} alt="card" />
 				</button>
 			</Col>
 		)
@@ -61,20 +69,20 @@ class Game extends Component {
 		return (
 			<div>
 				<Row justify="space-around">
-					<Col span={12} style={{ fontSize: 30 }}>Player: {this.state.myName}</Col>
+					<Col span={12} style={{ fontSize: 30 }}>Enemy: {this.state.enemyNickName}</Col>
 					<Col span={8}>
 					</Col>
 					<Col span={4}>
 						<Icon type="hourglass" />
 					</Col>
 				</Row>
-				<h3>Poolprice: {poolprice}</h3>
+				<h3>Poolprice: {this.state.poolSize}</h3>
 				<Row type="flex" justify="center">
 					<h1>Enemy Card</h1>
 				</Row>
 
 				<Row type="flex" justify="center">
-					<img src={pokerBackCard} height={cardHeight} width={cardWidth} />
+					<img src={cardTypes[this.state.enemyCardType]} height={cardHeight} width={cardWidth} alt="enemyCard"/>
 				</Row>
 
 				<Row type="flex" justify="center">
@@ -91,7 +99,7 @@ class Game extends Component {
 					{this.renderMyCard(4, citizenCard)}
 				</Row>
 				<Row type="flex" justify="center">
-					{this.state.finish == true && this.renderFinish()}
+					{this.state.finish === true && this.renderFinish()}
 				</Row>
 			</div>
 		);
