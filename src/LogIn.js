@@ -44,8 +44,8 @@ class LogIn extends Component {
             <div style={sectionStyle}>
                 <div className='container'>
                     <NowTime />
+                    <h1>It is impossible to win the race unless you venture to run, impossible to win the victory unless you dare to battle.</h1>
                     <p>Your account: {this.state.account}</p>
-                    
                     {this.state.nickName2 === ''&&
                     <form onSubmit={this.onSubmit} style={{ display: 'flex' }}>
                         <input

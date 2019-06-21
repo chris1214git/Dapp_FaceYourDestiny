@@ -13,7 +13,9 @@ class Main extends Component {
         this.state = {
             selectpoolsize: 0,
             pools: this.props.pools,
-            totalPools: this.props.totalPools
+            totalPools: this.props.totalPools,
+            Anubis: this.props.Anubis,
+            createPool: this.props.createPool
         };
 
         this.changeStatePoolsize = this.changeStatePoolsize.bind(this)
@@ -35,20 +37,15 @@ class Main extends Component {
     changeStatePoolsize(event) {
         /*因為所有的組件改變時都會呼叫這個function
         所以這裡就不能像一開始一樣寫死的*/
-
-        //首先要去抓目前發生改變的組件的name
         let changeName = event.target.name
-        //再把他目前的value拿去更改state
         this.setState({ [changeName]: event.target.value })
     }
 
     submitForm(event) {
-        // TODO
-        // create Pool
-
         console.log(`獎池大小：${this.state.selectpoolsize}`)
         console.log('Create a room ...')
         event.preventDefault()
+        this.props.createPool(this.state.selectpoolsize);
     }
 
     render() {

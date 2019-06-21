@@ -9,14 +9,22 @@ const pokerBackCard = require('./picture/pokerBack.png');
 const cardHeight = 200;
 const cardWidth = 120;
 
-// let enemy_emj = 0;
-// let enemy_card = 0;
+const emoji1 = require('./picture/emoji_1.jpg');
+const emoji2 = require('./picture/emoji_2.jpg');
+const emoji3 = require('./picture/emoji_3.jpg');
+const emoji4 = require('./picture/emoji_4.jpg');
 
 let cardTypes = [];
 cardTypes.push(pokerBackCard);
 cardTypes.push(slaveCard);
 cardTypes.push(citizenCard);
 cardTypes.push(emperorCard);
+
+let emojis = []
+emojis.push(emoji1);
+emojis.push(emoji2);
+emojis.push(emoji3);
+emojis.push(emoji4);
 
 class Game extends Component {
 	constructor(props) {
@@ -52,13 +60,25 @@ class Game extends Component {
 		)
 	}
 
+	clickEmoji(i){
+		console.log("click emoji",i);
+	}
+
+	renderMyEmoji(i) {
+		return (
+			<Col span={4}>
+				<button type="button" >
+					<img src={emojis[i]} height={cardHeight/1.5} width={cardWidth/1.3}
+						onClick={() => this.clickEmoji(i)} alt="emoji" />
+				</button>
+			</Col>
+		)
+	}
 	renderFinish() {
 		return (
 			<Col >
 				<button type="button" >
-					{/* <img src={cardType} height={cardHeight} width={cardWidth}
-						onClick={() => this.clickCard(i)} /> */}
-					<p>Finished! Back to KingsLanding.</p>
+					<a href="/home">Finished! Back to KingsLanding.</a>
 				</button>
 			</Col>
 		)
@@ -100,6 +120,12 @@ class Game extends Component {
 				</Row>
 				<Row type="flex" justify="center">
 					{this.state.finish === true && this.renderFinish()}
+				</Row>
+				<Row type="flex" justify="center">
+					{this.renderMyEmoji(0)}
+					{this.renderMyEmoji(1)}
+					{this.renderMyEmoji(2)}
+					{this.renderMyEmoji(3)}
 				</Row>
 			</div>
 		);

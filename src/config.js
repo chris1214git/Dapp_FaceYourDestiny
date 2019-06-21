@@ -1,4 +1,4 @@
-export const Anubis_ADDRESS = '0x03794638AA5EA17929338b9b4C492bb64aB2193F'
+export const Anubis_ADDRESS = '0x62779235e3670cDC7d7653Ca41c692Db51531db0'
 export const Anubis_ABI=[
   {
     "constant": true,
@@ -17,25 +17,6 @@ export const Anubis_ABI=[
       {
         "name": "",
         "type": "uint8"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [
-      {
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "PyramidClock",
-    "outputs": [
-      {
-        "name": "",
-        "type": "uint256"
       }
     ],
     "payable": false,
@@ -132,15 +113,27 @@ export const Anubis_ABI=[
       },
       {
         "name": "pyramidHeight",
-        "type": "uint256"
+        "type": "uint32"
       },
       {
-        "name": "inChanllenge",
-        "type": "bool"
+        "name": "pyramidClock",
+        "type": "uint32"
       },
       {
         "name": "round",
         "type": "uint8"
+      },
+      {
+        "name": "inChallenge",
+        "type": "bool"
+      },
+      {
+        "name": "pharaoh_Done",
+        "type": "bool"
+      },
+      {
+        "name": "challenger_Done",
+        "type": "bool"
       }
     ],
     "payable": false,
@@ -221,7 +214,7 @@ export const Anubis_ABI=[
       },
       {
         "name": "_height",
-        "type": "uint256"
+        "type": "uint32"
       }
     ],
     "name": "createPyramid",
