@@ -5,26 +5,8 @@ import { Card } from 'antd';
 function getRandomInt(max) {
     return Math.floor(Math.random() * Math.floor(max));
 }
+let i=0;
 
-let roomSize = 3;
-let poolPrices = [];
-let roomNumbers = [];
-let kings = ['Chris', 'David', 'Ivy'];
-let i
-for (i = 0; i < roomSize; i++) {
-    poolPrices.push(getRandomInt(10000));
-    roomNumbers.push(i);
-}
-
-
-
-
-// props: pools[n],totalPools
-// pool={
-//     kingNickName,
-//     poolSize,
-//     currentPoolSize,
-//
 class Main extends Component {
     constructor(props) {
         super(props);
@@ -33,20 +15,19 @@ class Main extends Component {
             pools: this.props.pools,
             totalPools: this.props.totalPools
         };
-        console.log(this.state.totalPools)
 
         this.changeStatePoolsize = this.changeStatePoolsize.bind(this)
         this.submitForm = this.submitForm.bind(this)
     }
-    renderPool(roomName, kingId, poolSize, Fee) {
+    renderPool(roomName, kingId, poolSize, Fee, key) {
         return (
-            <div>
-                <Card title={roomName} extra={<a href="#">Battle</a>} style={{ width: 300 }}>
+            <div key={key} >
+                <Card title={roomName} extra={<a href="/game">Battle</a>} style={{ width: 300 }}>
                     {/* <p>Current King: {kings[i]}</p> */}
                     <p>Current King: {kingId}</p>
                     <p>Current Poolsize: {poolSize}</p>
                     <p>Entrance Fee: {Fee}</p>
-    
+
                 </Card>
             </div>
         );
@@ -64,19 +45,22 @@ class Main extends Component {
     submitForm(event) {
         // TODO
         // create Pool
-        
+
         console.log(`獎池大小：${this.state.selectpoolsize}`)
         console.log('Create a room ...')
         event.preventDefault()
     }
 
     render() {
+        console.log("TOTOT",this.state.totalPools)
+
         let rooms = [];
         let roomName;
         let hill;
+
         for (i = 0; i < this.state.totalPools; i++) {
-            roomName = 'Room: ' + roomNumbers[i]
-            hill = this.renderPool(roomName, kings[i], poolPrices[i], 1);
+            roomName = 'Room: ' + i
+            hill = this.renderPool(roomName, this.state.pools[i].pharaoh.toString(), Number(this.state.pools[i].pyramidHeight.toString()), 1, i);
             rooms.push(hill);
         }
         return (
@@ -95,6 +79,11 @@ class Main extends Component {
                         <input type="submit" hidden="" />
                     </div>
                 </form>
+                {/* {this.state.pools.map((pool, key) => {
+                    return (
+                        renderPool(roomName, kingId, poolSize, Fee, key)
+                    )
+                })} */}
                 {rooms}
             </div>
         );

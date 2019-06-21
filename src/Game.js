@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 
 import { Row, Col, Icon } from 'antd';
 
-const emperorCard = require('./emperorCard.jpg');
-const citizenCard = require('./citizenCard.jpg');
-const slaveCard = require('./slaveCard.jpg');
+const emperorCard = require('./picture/emperorCard.jpg');
+const citizenCard = require('./picture/citizenCard.jpg');
+const slaveCard = require('./picture/slaveCard.jpg');
 const pokerBackCard = require('./picture/pokerBack.png');
 const cardHeight = 200;
 const cardWidth = 120;
