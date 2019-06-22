@@ -1,28 +1,5 @@
-export const Anubis_ADDRESS = '0x62779235e3670cDC7d7653Ca41c692Db51531db0'
+export const Anubis_ADDRESS = '0x45eEa1ee8B0DD716A57e30EBE2DCd394E8EaCe96'
 export const Anubis_ABI=[
-  {
-    "constant": true,
-    "inputs": [
-      {
-        "name": "",
-        "type": "uint256"
-      },
-      {
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "BattleHistory",
-    "outputs": [
-      {
-        "name": "",
-        "type": "uint8"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
   {
     "constant": true,
     "inputs": [
@@ -40,6 +17,10 @@ export const Anubis_ABI=[
       {
         "name": "alive",
         "type": "bool"
+      },
+      {
+        "name": "location",
+        "type": "uint256"
       }
     ],
     "payable": false,
@@ -243,6 +224,25 @@ export const Anubis_ABI=[
       {
         "name": "_id",
         "type": "address"
+      }
+    ],
+    "name": "getmyPyramid",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_id",
+        "type": "address"
       },
       {
         "name": "_pyramidNumber",
@@ -278,6 +278,29 @@ export const Anubis_ABI=[
     ],
     "name": "selectCard",
     "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_pyramidNumber",
+        "type": "uint256"
+      },
+      {
+        "name": "_round",
+        "type": "uint256"
+      }
+    ],
+    "name": "getBattleHistory",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "payable": false,
     "stateMutability": "nonpayable",
     "type": "function"

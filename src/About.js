@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 
+
+// const Liu = require('./picture/Liu.jpg');
+// const Liao = require('./picture/Liao.jpg');
+
 class About extends Component {
     constructor(props) {
         super(props);
@@ -22,6 +26,12 @@ class About extends Component {
                 <p dir="ltr">對戰勝場數最高的前10%玩家分額外紅利,每個月一次，消費超過平均值的玩家有抽獎機會，可以躍昇成大富翁（每個人在玩遊戲的時候會播一些前給遊戲，提供這個抽獎的籌碼）</p>
                 <p>&nbsp;</p>
                 <p dir="ltr">*** 對戰贏超過N場後可獲得不同logo，每個人可製作自己的logo</p>
+                <p dir="ltr">以下是原始代碼</p>
+                <a href="https://github.com/chris1214git/Dapp_FaceYourDestiny">https://github.com/chris1214git/Dapp_FaceYourDestiny</a>
+                <p dir="ltr">作者群- 劉力仁,廖泰甯</p>
+                {/* <img src={Liu} />
+                <img src={Liao} /> */}
+                <p dir="ltr">徵才： 我們非常需要css專家，有意者請致信 b04901068@ntu.edu.tw</p>
             </div>
         );
     }

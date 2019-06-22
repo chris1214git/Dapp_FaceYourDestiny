@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-// import './LogIn.css'
+import './LogIn.css'
 
-import NowTime from './NowTime'
+import {withRouter} from 'react-router-dom';
+import { Button } from 'antd';
 
 const iron_throne = require('./picture/Iron-throne.jpg');
 
@@ -22,9 +23,8 @@ class LogIn extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            time: new Date().toLocaleTimeString(),
-            nickName: this.props.nickName,
-            nickName2: '',
+            nickName: '',
+            nickName2: this.props.nickName,
             account: this.props.account
         }
 
@@ -33,43 +33,53 @@ class LogIn extends Component {
     onSubmit = (e) => {
         e.preventDefault();
         this.props.setNickName(this.state.nickName);
-        this.setState({nickName2:this.state.nickName})
+        this.setState({ nickName2: this.state.nickName })
     }
 
     onChange = (e) => this.setState({ [e.target.name]: e.target.value });
 
+    nextPath(path) {
+        this.props.history.push(path);
+    }
     render() {
         return (
-
             <div style={sectionStyle}>
+
+                {console.log(" ")}
+                {/* {console.log("Nick name in login:",this.state.nickName2)} */}
                 <div className='container'>
-                    <NowTime />
-                    <h1>It is impossible to win the race unless you venture to run, impossible to win the victory unless you dare to battle.</h1>
-                    <p>Your account: {this.state.account}</p>
-                    {this.state.nickName2 === ''&&
-                    <form onSubmit={this.onSubmit} style={{ display: 'flex' }}>
-                        <input
-                            type="text"
-                            name="nickName"
-                            style={{ flex: '10', padding: '5px' }}
-                            placeholder="Add nickName ..."
-                            // value={this.state.title}
-                            onChange={this.onChange}
-                        />
-                        <input
-                            type="submit"
-                            value="Submit"
-                            className="btn"
-                            style={{ flex: '1' }}
-                        />
-                    </form>}
-                    <p>NickName: {this.state.nickName2}</p>
+                    <div className='centered'>
+                        <h1>~ Welcome, Warriors ~</h1>
+                    </div>
+                    <h3>It is impossible to win the victory unless you dare to battle!</h3>
+                    {this.state.nickName2 === '' &&
+                        <form onSubmit={this.onSubmit} style={{ display: 'flex' }}>
+                            Say your name:
+                            <input
+                                type="text"
+                                name="nickName"
+                                style={{ flex: '10', padding: '5px' }}
+                                placeholder="Add nickName ..."
+                                // value={this.state.title}
+                                onChange={this.onChange}
+                            />
+                            <input
+                                type="submit"
+                                value="Submit"
+                                className="btn"
+                                style={{ flex: '1' }}
+                            />
+                        </form>}
+                    {this.state.nickName2 !== '' && <p>Dear {this.state.nickName2}:</p>}
+                    {this.state.nickName2 !== '' && <h3>Are you ready??</h3>}
+                    {this.state.nickName2 !== '' && <Button type="primary" onClick={() => this.nextPath('/main') }>GO</Button>}
+                    {this.state.nickName2 !== '' && <Button type="primary">No I am a chicken</Button>}
                 </div>
 
                 {/* <div className="loader">
                     <div className="circle"></div>
                     <div className="circle"></div>
-                </div>
+                    </div>
                 <section className="main">
                     <h1>Welcome To My Site</h1>
                     <p>
@@ -84,4 +94,4 @@ class LogIn extends Component {
     }
 }
 
-export default LogIn;
+export default withRouter(LogIn);
