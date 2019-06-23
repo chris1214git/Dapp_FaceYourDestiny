@@ -66,13 +66,13 @@ class Main extends Component {
             this.setState({
                 pools: [...this.state.pools, pyramid]
             })
-            console.log("The %d-th pyramid", i, pyramid)
+            // console.log("The %d-th pyramid", i, pyramid)
         }
 
         const webNickName = await this.state.Anubis.methods.Maat(this.state.account).call();
         if (webNickName) {
             this.setState({ nickName: webNickName.name })
-            console.log("Hi", webNickName.name)
+            // console.log("Hi", webNickName.name)
         }
     }
 

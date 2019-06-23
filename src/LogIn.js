@@ -16,11 +16,11 @@ const cardWidth = 400;
 let sectionStyle = {
 
     // background-repeat: 'no-repeat',
-    // background-attachment: fixed,
-    backgroundPosition: 'center',
-    width: '88%',
-    height: '800px',
-    backgroundSize: 'cover',
+    // // background-attachment: fixed,
+    // backgroundPosition: 'center',
+    // width: '88%',
+    // height: '800px',
+    // backgroundSize: 'cover',
     // opacity: 0.5,
     // makesure here is String确保这里是一个字符串，以下是es6写法
     // backgroundImage: `url(${iron_throne})`
@@ -36,13 +36,13 @@ class LogIn extends Component {
             account: '',//this.props.account
             nickName: '',
             nickName2: '',//this.props.nickName,
-            coward:false,
+            coward: false,
         }
 
     }
 
     componentDidMount() {
-        setTimeout(this.loadBlockchainData.bind(this),1);
+        setTimeout(this.loadBlockchainData.bind(this), 1);
     }
 
     async loadBlockchainData() {
@@ -60,10 +60,10 @@ class LogIn extends Component {
             console.log("Hi", webNickName.name)
         }
 
-        setTimeout(this.loadBlockchainData.bind(this),10000);
+        setTimeout(this.loadBlockchainData.bind(this), 10000);
     }
 
-    
+
     setNickName = (nickName) => {
         this.setState({ nickName2: nickName })
         this.state.Anubis.methods.createEgyption(this.state.account, nickName).send({ from: this.state.account })
@@ -84,21 +84,23 @@ class LogIn extends Component {
     nextPath(path) {
         this.props.history.push(path);
     }
-    clickCoward(){
-        this.setState({coward:true})
+    clickCoward() {
+        this.setState({ coward: true })
     }
 
     render() {
         return (
-            <div style={sectionStyle}>
-                <div className='container'>
-                    <div className='centered'>
-                        <h1>~ Welcome, Warriors ~</h1>
-                    </div>
+            <div className='container'>
+                <div className='centered'>
+                    <h1>~~~ Welcome, Warriors ~~~ <br></br>
+                        It's a game of thrones
+                        </h1>
+                </div>
+                <div className='quotes'>
                     <h3>It is impossible to win the victory unless you dare to battle!</h3>
                     {this.state.nickName2 === '' &&
-                        <form onSubmit={this.onSubmit} style={{ display: 'flex' }}>
-                            Say your name:
+                        <form className="nickNameForm" onSubmit={this.onSubmit} style={{ display: 'flex' }}>
+                            <lable>Say your name:</lable>
                             <input
                                 type="text"
                                 name="nickName"
@@ -115,12 +117,12 @@ class LogIn extends Component {
                             />
                         </form>}
                     {this.state.nickName2 !== '' && <h3>{this.state.nickName2}: Are you ready to fight??</h3>}
-                    {this.state.nickName2 !== '' && <img src={pillsCard} height={cardHeight} width={cardWidth} alt="pills"/>}
+                    {this.state.nickName2 !== '' && <img src={pillsCard} height={cardHeight} width={cardWidth} alt="pills" />}
                     {this.state.nickName2 !== '' && <br></br>}
                     {this.state.nickName2 !== '' && <Button type="primary" onClick={() => this.nextPath('/main')}>GO</Button>}
                     {this.state.nickName2 !== '' && <Button type="primary" onClick={() => this.clickCoward()}> No I am a chicken</Button>}
                     {this.state.coward && <h3>You Coward!</h3>}
-                    {this.state.coward && <img src={cowardCard} height={cardHeight} width={cardWidth} alt="coward"/>}
+                    {this.state.coward && <img src={cowardCard} height={cardHeight} width={cardWidth} alt="coward" />}
                 </div>
             </div>
         )

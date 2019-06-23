@@ -90,7 +90,6 @@ class Game extends Component {
 	}
 
 	async getmyPyramid() {
-		console.log("account", this.state.account);
 
 		// get contract
 		const Anubis = this.state.Anubis;
@@ -98,9 +97,10 @@ class Game extends Component {
 
 		if (myRoomId !== 0) {
 			let myPyramid = await Anubis.methods.Sahara(myRoomId).call();
+			let round = myPyramid.round
 
 			this.setState({ myPyramid });
-			this.setState({ roundx: myPyramid.round })
+			this.setState({ roundx: round })
 			console.log("My pyramid:", myPyramid)
 			let isKing = -1;
 
@@ -142,26 +142,28 @@ class Game extends Component {
 		
 		
 		console.log("HI")
-		console.log("Round %d result: %d", this.state.roundx, Number(roundXRes.toString()));
+		console.log("Round %d result: %d", this.state.roundx===0?0:this.state.roundx-1, Number(roundXRes.toString()));
+		this.setState({roundXRes:Number(roundXRes.toString())})
 
-		if (roundXRes !== 4) {
-			if (roundXRes === 3) {
+		if (this.state.roundXRes !== 4) {
+			if (this.state.roundXRes === 3) {
 				
 				const roundHistory = this.state.roundHistory.slice();
 				roundHistory[this.state.roundx] = 2; //citizen
 				this.setState({ roundHistory });
 			}
-			else if (roundXRes >= 0 && roundXRes <= 2) {
+			else if (this.state.roundXRes >= 0 && this.state.roundXRes <= 2) {
 				// end of game, show result
 				const roundHistory = Array(5).fill(-1);
 				this.setState({ roundHistory });
 				
 				//TODO: 
-				if (roundXRes === 0) {
+				console.log("roundXres",this.state.roundXRes)
+				if (this.state.roundXRes === 0) {
 					this.setState({ enemyCard: this.state.isKing ? 1 : 3 })
 					this.setState({ gameResult: this.state.isKing ? -1 : 1 })
-				} else if (roundXRes === 1) {
-					this.setState({ enemyCard: this.state.isKing ? 1 : 2 })
+				} else if (this.state.roundXRes === 1) {
+					this.setState({ enemyCard: this.state.isKing ? 2 : 3 })
 					this.setState({ gameResult: this.state.isKing ? 1 : -1 })
 				}
 				else {
@@ -170,7 +172,7 @@ class Game extends Component {
 				}
 			}
 		}
-	
+		console.log("enemyCard, gameresult",this.state.enemyCard,this.state.gameResult)
 	// refresh every 10 second
 	setTimeout(this.askRoundX.bind(this), 10000)
 	}
@@ -216,7 +218,7 @@ renderFinish() {
 	return (
 		<Col >
 			<button type="button" >
-				<a href="/home">Finished! Back to KingsLanding.</a>
+				<a href="/main">Finished! Back to KingsLanding.</a>
 			</button>
 		</Col>
 	)
@@ -235,6 +237,7 @@ render() {
 				</Col>
 			</Row>
 			<h3>Poolprice: {this.state.myPyramid.pyramidHeight}</h3>
+			<h1>Round {this.state.roundx}</h1>
 			<Row type="flex" justify="center">
 				<h1>Enemy Card</h1>
 			</Row>
@@ -263,8 +266,8 @@ render() {
 				{this.renderMyEmoji(3)}
 			</Row>
 			<Row type="flex" justify="center">
-				{this.gameResult===1 && <h1>Congratulation You Win !</h1>}
-				{this.gameResult===-1&& <h1>Sorry you are loser ~</h1>}
+				{this.state.gameResult===1 && <h1>Congratulation You Win !</h1>}
+				{this.state.gameResult===-1&& <h1>Sorry you are loser ~</h1>}
 			</Row>
 			<Row type="flex" justify="center">
 				{this.state.gameResult !== 0 && this.renderFinish()}
