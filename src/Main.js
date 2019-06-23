@@ -175,7 +175,7 @@ class Main extends Component {
     renderPool(roomName, kingId, poolSize, Fee, key) {
         return (
             <div key={key} >
-                <Card title={roomName} extra={<a onClick={() => this.selectBattle(i)} href="/game">Battle</a>} style={{ width: 300 }}>
+                <Card title={roomName} extra={<a onClick={() => this.selectBattle(i)} >Battle</a>} style={{ width: 300 }}>
                     {/* <p>Current King: {kings[i]}</p> */}
                     <p>Current King: {kingId}</p>
                     <p>Current Poolsize: {poolSize}</p>
