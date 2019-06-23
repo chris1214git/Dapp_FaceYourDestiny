@@ -19,7 +19,7 @@ class ShowMyRoom extends Component {
                 <h2>You are the {this.props.isKing? "King":"Challenger"} now</h2>
                 <p>Room id:{this.props.roomId}</p>
                 <p>Current king:{this.props.kingId}</p>
-                <p>Current challenger:{this.props.challangerId}</p>
+                <p>Current challenger:{this.props.challengerId}</p>
                 <p>Pool Size:{this.props.poolSize}</p>
 
                 <li><Link to="/game">Go to Game</Link></li>

@@ -1,7 +1,14 @@
-import React, { Component } from 'react';
+// TODO
+// delete card, game process
+// emoji
 
+
+import React, { Component } from 'react';
 import { Row, Col, Icon } from 'antd';
-import { callExpression } from '@babel/types';
+
+import Web3 from 'web3'
+import { Anubis_ADDRESS, Anubis_ABI } from './config'
+
 
 const emperorCard = require('./picture/emperorCard.jpg');
 const citizenCard = require('./picture/citizenCard.jpg');
@@ -31,53 +38,136 @@ emojis.push(emoji4);
 class Game extends Component {
 	constructor(props) {
 		super(props);
-		let { name } = this.props;
 		let cardstate = Array(5).fill(0); //not selected yet
 
 		this.state = {
-			account: this.props.account,
-			Anubis: this.props.Anubis,
-			myRoomId: this.props.myRoomId,
-			myPyramid: this.props.myPyramid,
-			isKing: this.props.isKing,
+			web3: "",
+			Anubis: "",
+			account: "",
+
+			myRoomId: "",
+			myPyramid: "",
+			isKing: "",
 
 			roundx: 0,
 			roundHistory: Array(5).fill(-1),
 			gameResult: 0, // -1:lose 1:win
+			enemyCard: 0,
 
-			myName: name,
+			nickName: "",
+			enemyNickName: "",
 			cardstate: cardstate,
 			finish: true,
 		};
 	}
 
 	componentDidMount() {
+
+		this.loadBlockchainData();
+		setTimeout(this.getmyPyramid.bind(this), 1000)
 		setTimeout(this.askRoundX.bind(this), 10000)
 	}
 
-	async askRoundX() {
-		console.log("Round %d", this.state.roundx);
+	async loadBlockchainData() {
+		const web3 = new Web3(Web3.givenProvider || "http://127.0.0.1:7545");
+		const accounts = await web3.eth.getAccounts();
+		const Anubis = new web3.eth.Contract(Anubis_ABI, Anubis_ADDRESS)
 
-		const Anubis = this.props.Anubis;
+		this.setState({ web3: web3 });
+		this.setState({ account: accounts[0] });
+		this.setState({ Anubis: Anubis });
+
+		const webNickName = await this.state.Anubis.methods.Maat(this.state.account).call();
+		if (webNickName) {
+			this.setState({ nickName: webNickName.name })
+			console.log("Hi", webNickName.name)
+		}
+
+		let myRoomId = await Anubis.methods.getmyPyramid(this.state.account).call()
+		myRoomId = Number(myRoomId.toString());
+		console.log("My Room ID", myRoomId)
+		this.setState({ myRoomId })
+	}
+
+	async getmyPyramid() {
+		console.log("account", this.state.account);
+
+		// get contract
+		const Anubis = this.state.Anubis;
+		let myRoomId = this.state.myRoomId;
+
+		if (myRoomId !== 0) {
+			let myPyramid = await Anubis.methods.Sahara(myRoomId).call();
+
+			this.setState({ myPyramid });
+			this.setState({ roundx: myPyramid.round === 0 ? 0 : myPyramid.round - 1 })
+			console.log("My pyramid:", myPyramid)
+			let isKing = -1;
+
+			if (myPyramid.pharaoh === this.state.account) {
+				console.log("You are pharaoh")
+				let isKing = true;
+				this.setState({ isKing })
+			} else {
+				let isKing = false;
+				this.setState({ isKing })
+			}
+
+			if (isKing) {
+				if (myPyramid.challenger !== 0) {
+					let enemy = await Anubis.methods.Maat(myPyramid.challenger).call()
+					let enemyNickName = enemy.name;
+					this.setState({ enemyNickName })
+				}
+			} else {
+				let enemy = await Anubis.methods.Maat(myPyramid.pharaoh).call()
+				let enemyNickName = enemy.name;
+				this.setState({ enemyNickName })
+			}
+
+			if(Number(myPyramid.challenger.toString())!==0 && this.state.roundx===0){
+				this.setState({gameResult:0})
+			}
+
+
+		}
+
+		setTimeout(this.getmyPyramid.bind(this, this.state.account), 10000)
+	}
+
+	async askRoundX() {
+
+		const Anubis = this.state.Anubis;
 		const roundXRes = await Anubis.methods.getBattleHistory(this.state.myRoomId, this.state.roundx).call();
-		console.log("Round x result", roundXRes);
+
+		console.log("Round %d result: %d", this.state.roundx, roundXRes);
 
 		if (roundXRes !== 4) {
 			if (roundXRes === 3) {
-				this.setState({ roundx: (this.state.roundx + 1) })
 
 				const roundHistory = this.state.roundHistory.slice();
 				roundHistory[this.state.roundx] = 2; //citizen
 				this.setState({ roundHistory });
 			}
-			else {
+			else if (roundXRes >= 0 && roundXRes <= 2) {
 				// end of game, show result
-				this.setState({ roundx: 0 })
 				const roundHistory = Array(5).fill(-1);
 				this.setState({ roundHistory });
 
 				//TODO: 
-				this.setState({ gameResult: -1 })
+				if (roundXRes === 0) {
+					this.setState({ enemyCard: this.state.isKing ? 1 : 3 })
+					this.setState({ gameResult: this.state.isKing ? -1 : 1 })
+				} else {
+					if (roundXRes === 1) {
+						this.setState({ enemyCard: this.state.isKing ? 1 : 2 })
+					}
+					else{
+						this.setState({ enemyCard: this.state.isKing ? 2 : 1 })
+					}
+					this.setState({ gameResult: this.state.isKing ? 1 : -1 })
+				}
+
 			}
 		}
 
@@ -89,13 +179,12 @@ class Game extends Component {
 		const cardstate = this.state.cardstate.slice();
 		cardstate[i] = 1;
 		this.setState({ cardstate: cardstate });
-		console.log(this.state.account, this.state.myRoomId, i!==0)
-		this.state.Anubis.methods.selectCard(this.state.account, this.state.myRoomId, i!==0).send({ from: this.state.account })
+		console.log(this.state.account, this.state.myRoomId, i !== 0)
+		this.state.Anubis.methods.selectCard(this.state.account, this.state.myRoomId, i !== 0).send({ from: this.state.account })
 			.once('receipt', (receipt) => {
 				console.log("select card successfully!")
 				console.log(receipt)
 			})
-
 	}
 
 	clickEmoji(i) {
@@ -138,7 +227,7 @@ class Game extends Component {
 		return (
 			<div>
 				<Row justify="space-around">
-					<Col span={12} style={{ fontSize: 30 }}>Enemy: {this.state.isKing? this.state.myPyramid.challenger: this.state.myPyramid.pharaoh}</Col>
+					<Col span={12} style={{ fontSize: 30 }}>Enemy: {this.state.enemyNickName}</Col>
 					<Col span={8}>
 					</Col>
 					<Col span={4}>
@@ -151,7 +240,7 @@ class Game extends Component {
 				</Row>
 
 				<Row type="flex" justify="center">
-					<img src={cardTypes[this.state.roundx===0? 0:2]} height={cardHeight} width={cardWidth} alt="enemyCard" />
+					<img src={cardTypes[this.state.roundx===0 ? 0 : this.state.gameResult === 0 ? 2 : this.state.enemyCard]} height={cardHeight} width={cardWidth} alt="enemyCard" />
 				</Row>
 
 				<Row type="flex" justify="center">
@@ -161,11 +250,11 @@ class Game extends Component {
 					<h1>remain time: </h1>
 				</Row>
 				<Row type="flex" justify="center">
-					{this.renderMyCard(0, this.state.isKing? emperorCard:slaveCard)}
-					{this.renderMyCard(1, citizenCard)}
-					{this.renderMyCard(2, citizenCard)}
-					{this.renderMyCard(3, citizenCard)}
-					{this.renderMyCard(4, citizenCard)}
+					{this.state.cardstate[0] === 0 && this.renderMyCard(0, this.state.isKing ? emperorCard : slaveCard)}
+					{this.state.cardstate[1] === 0 && this.renderMyCard(1, citizenCard)}
+					{this.state.cardstate[2] === 0 && this.renderMyCard(2, citizenCard)}
+					{this.state.cardstate[3] === 0 && this.renderMyCard(3, citizenCard)}
+					{this.state.cardstate[4] === 0 && this.renderMyCard(4, citizenCard)}
 				</Row>
 				<Row type="flex" justify="center">
 					{this.state.gameResult !== 0 && this.renderFinish()}
