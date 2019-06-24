@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import './About.css'
 
 // const Liu = require('./picture/Liu.jpg');
 // const Liao = require('./picture/Liao.jpg');
@@ -11,7 +11,7 @@ class About extends Component {
     }
     render() {
         return (
-            <div>
+            <div className="about-container">
                 <p>Face your desitny</p>
                 <p dir="ltr">遊戲方法:（帝王撲克）</p>
                 <p dir="ltr">1.每一個獎池，會有一個國王，持國王牌組，挑戰者持奴隸牌組。</p>

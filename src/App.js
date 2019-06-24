@@ -27,18 +27,18 @@ class App extends Component {
       // <HashRouter>
       <BrowserRouter>
         <div>
-          <ul>
-            <li><Link to="/">LogIn</Link></li>
-            <li><Link to="/main">Main</Link></li>
-            <li><Link to="/game">Game</Link></li>
-            <li><Link to="/about">About</Link></li>
-          </ul>
           <hr />
           <Route exact path="/" component={LogIn}/>
           <Route exact path="/main" component={Main}/>
           <Route exact path="/game" component={Game}/>
           <Route exact path="/about" component={About}/>
         </div>
+        <ul>
+            <li><Link to="/">LogIn</Link></li>
+            <li><Link to="/main">Main</Link></li>
+            <li><Link to="/game">Game</Link></li>
+            <li><Link to="/about">About</Link></li>
+          </ul>
       </BrowserRouter>
       /* </HashRouter> */
     );

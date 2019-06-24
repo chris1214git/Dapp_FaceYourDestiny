@@ -97,10 +97,11 @@ class LogIn extends Component {
                         </h1>
                 </div>
                 <div className='quotes'>
-                    <h3>It is impossible to win the victory unless you dare to battle!</h3>
+                    <h3>You can win the world, but<br></br>
+                        it is impossible to win the victory unless you dare to battle!</h3>
                     {this.state.nickName2 === '' &&
                         <form className="nickNameForm" onSubmit={this.onSubmit} style={{ display: 'flex' }}>
-                            <lable>Say your name:</lable>
+                            <lable style={{display:"block" ,color:"white"}}>Say your name and swear:</lable>
                             <input
                                 type="text"
                                 name="nickName"
@@ -112,12 +113,12 @@ class LogIn extends Component {
                             <input
                                 type="submit"
                                 value="Submit"
-                                className="btn"
+                                className="btn2"
                                 style={{ flex: '1' }}
                             />
                         </form>}
                     {this.state.nickName2 !== '' && <h3>{this.state.nickName2}: Are you ready to fight??</h3>}
-                    {this.state.nickName2 !== '' && <img src={pillsCard} height={cardHeight} width={cardWidth} alt="pills" />}
+                    {this.state.nickName2 !== '' && <img style={{borderColor:'beige',borderWidth:'3px',borderStyle:'solid' }}src={pillsCard} height={cardHeight} width={cardWidth} alt="pills" />}
                     {this.state.nickName2 !== '' && <br></br>}
                     {this.state.nickName2 !== '' && <Button type="primary" onClick={() => this.nextPath('/main')}>GO</Button>}
                     {this.state.nickName2 !== '' && <Button type="primary" onClick={() => this.clickCoward()}> No I am a chicken</Button>}

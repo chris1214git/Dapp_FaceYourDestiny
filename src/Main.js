@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card } from 'antd';
+import { Card, AutoComplete } from 'antd';
 import ShowMyRoom from './ShowMyRoom';
 
 import { withRouter } from 'react-router-dom';
@@ -7,12 +7,17 @@ import { withRouter } from 'react-router-dom';
 
 import Web3 from 'web3'
 import { Anubis_ADDRESS, Anubis_ABI } from './config'
+import './Main.css'
 
 
-function getRandomInt(max) {
-    return Math.floor(Math.random() * Math.floor(max));
-}
 let i = 0;
+let formstyle = {
+    margin: '5px',
+    padding: '5px',
+    border: '2px grey solid',  
+    backgroundColor: 'lightsteelblue',
+    borderRadius: '40%',
+}
 
 class Main extends Component {
     constructor(props) {
@@ -169,15 +174,15 @@ class Main extends Component {
         console.log('Create a room ...')
         event.preventDefault()
         this.createPool(this.state.selectpoolsize);
-        this.props.history.push('/game');
+        // this.props.history.push('/game');
     }
-    
+
     renderPool(roomName, kingId, poolSize, Fee, key) {
         return (
-            <div key={key} >
-                <Card title={roomName} extra={<a onClick={() => this.selectBattle(i)} >Battle</a>} style={{ width: 300 }}>
+            <div className="Card" key={key} >
+                <Card width='70%'bordered='false' bodyStyle={{color:'white',backgroundColor:'darkgray'}}headStyle={{color:'gold', backgroundColor:'black'}} title={roomName} extra={ <a style={{color:'gold'}} onClick={() => this.selectBattle(i)} >Battle</a>} style={{ width: 300 }}>
                     {/* <p>Current King: {kings[i]}</p> */}
-                    <p>Current King: {kingId}</p>
+                    <p>Current King: <br></br>{kingId}</p>
                     <p>Current Poolsize: {poolSize}</p>
                     <p>Entrance Fee: {Fee}</p>
 
@@ -193,16 +198,21 @@ class Main extends Component {
 
         for (i = 0; i < this.state.pyramidCounter - 1; i++) {
             roomName = 'Room: ' + i
-            if(this.state.pools.length===i) break
-            if(Number(this.state.pools[i].challenger.toString())===0){                
+            if (this.state.pools.length === i) break
+            if (Number(this.state.pools[i].challenger.toString()) === 0) {
                 hill = this.renderPool(roomName, this.state.pools[i].pharaoh.toString(), Number(this.state.pools[i].pyramidHeight.toString()), 1, i);
-                rooms.push(hill);    
+                rooms.push(hill);
             }
         }
 
         return (
-            <div>
-                <h1>Welcome to Kingslanding</h1>
+            <div className='container'>
+                <div className='bg'></div>
+                <div className="block"></div>
+
+                <div className="welcome">
+                    <h1>Welcome to Kingslanding</h1>
+                </div>
 
                 {/* In some room, show my room */}
                 {this.state.myRoomId !== 0 &&
@@ -216,19 +226,22 @@ class Main extends Component {
 
                 {/* Not in any room, show every room without challenger */}
                 {this.state.myRoomId === 0 &&
-                    <form onSubmit={this.submitForm}>
-                        <div>
-                            <label>Create a Room, Please choose poolsize:</label>
-                            <select id="poolsize" name="selectpoolsize"
-                                value={this.state.selectpoolsize}
-                                onChange={this.changeStatePoolsize} >
-                                <option value="1">1</option>
-                                <option value="5">5</option>
-                                <option value="10">10</option>
-                            </select>
-                            <input type="submit" hidden="" />
-                        </div>
-                    </form>}
+                    <div style={formstyle}>
+                        {/* <h2>Create a new pool:</h2> */}
+                        <form  onSubmit={this.submitForm}>
+                            <div>
+                                <label>Create a Room, Please choose poolsize:</label>
+                                <select id="poolsize" name="selectpoolsize"
+                                    value={this.state.selectpoolsize}
+                                    onChange={this.changeStatePoolsize} >
+                                    <option value="1">1</option>
+                                    <option value="5">5</option>
+                                    <option value="10">10</option>
+                                </select>
+                                <input type="submit" hidden="" />
+                            </div>
+                        </form>
+                    </div>}
                 {this.state.myRoomId === 0 && rooms}
             </div>
         );

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom"
-
+import './ShowMyRoom.css'
 
 // roomId, kingId, challengerId, poolSize
 class ShowMyRoom extends Component {
@@ -13,13 +13,12 @@ class ShowMyRoom extends Component {
 
     render() {
         return (
-            <div>
-                <h1>You are in a room now</h1>
+            <div className="showmyroom">
                 <h2>This is your room information</h2>
-                <h2>You are the {this.props.isKing? "King":"Challenger"} now</h2>
+                <h2>You are the {this.props.isKing? "King":"Challenger"} !</h2>
                 <p>Room id:{this.props.roomId}</p>
-                <p>Current king:{this.props.kingId}</p>
-                <p>Current challenger:{this.props.challengerId}</p>
+                <p>Current king:<br></br>{this.props.kingId}</p>
+                <p>Current challenger:<br></br>{this.props.challengerId}</p>
                 <p>Pool Size:{this.props.poolSize}</p>
 
                 <li><Link to="/game">Go to Game</Link></li>
