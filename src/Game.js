@@ -8,7 +8,7 @@ import { Row, Col, Icon } from 'antd';
 
 import Web3 from 'web3'
 import { Anubis_ADDRESS, Anubis_ABI } from './config'
-
+import './Game.css'
 
 const emperorCard = require('./picture/emperorCard.jpg');
 const citizenCard = require('./picture/citizenCard.jpg');
@@ -134,20 +134,20 @@ class Game extends Component {
 
 		setTimeout(this.getmyPyramid.bind(this, this.state.account), 10000)
 	}
-	
+
 	async askRoundX() {
-		
+
 		const Anubis = this.state.Anubis;
 		const roundXRes = await Anubis.methods.getBattleHistory(this.state.myRoomId, this.state.roundx === 0 ? 0 : this.state.roundx - 1).call();
-		
-		
+
+
 		console.log("HI")
-		console.log("Round %d result: %d", this.state.roundx===0?0:this.state.roundx-1, Number(roundXRes.toString()));
-		this.setState({roundXRes:Number(roundXRes.toString())})
+		console.log("Round %d result: %d", this.state.roundx === 0 ? 0 : this.state.roundx - 1, Number(roundXRes.toString()));
+		this.setState({ roundXRes: Number(roundXRes.toString()) })
 
 		if (this.state.roundXRes !== 4) {
 			if (this.state.roundXRes === 3) {
-				
+
 				const roundHistory = this.state.roundHistory.slice();
 				roundHistory[this.state.roundx] = 2; //citizen
 				this.setState({ roundHistory });
@@ -156,9 +156,9 @@ class Game extends Component {
 				// end of game, show result
 				const roundHistory = Array(5).fill(-1);
 				this.setState({ roundHistory });
-				
+
 				//TODO: 
-				console.log("roundXres",this.state.roundXRes)
+				console.log("roundXres", this.state.roundXRes)
 				if (this.state.roundXRes === 0) {
 					this.setState({ enemyCard: this.state.isKing ? 1 : 3 })
 					this.setState({ gameResult: this.state.isKing ? -1 : 1 })
@@ -172,109 +172,122 @@ class Game extends Component {
 				}
 			}
 		}
-		console.log("enemyCard, gameresult",this.state.enemyCard,this.state.gameResult)
-	// refresh every 10 second
-	setTimeout(this.askRoundX.bind(this), 10000)
+		console.log("enemyCard, gameresult", this.state.enemyCard, this.state.gameResult)
+		// refresh every 10 second
+		setTimeout(this.askRoundX.bind(this), 10000)
 	}
 
-clickCard(i) {
-	const cardstate = this.state.cardstate.slice();
-	cardstate[i] = 1;
-	this.setState({ cardstate: cardstate });
-	console.log(this.state.account, this.state.myRoomId, i !== 0)
-	this.state.Anubis.methods.selectCard(this.state.account, this.state.myRoomId, i !== 0).send({ from: this.state.account })
-		.once('receipt', (receipt) => {
-			console.log("select card successfully!")
-			console.log(receipt)
-		})
-}
+	clickCard(i) {
+		const cardstate = this.state.cardstate.slice();
+		cardstate[i] = 1;
+		this.setState({ cardstate: cardstate });
+		console.log(this.state.account, this.state.myRoomId, i !== 0)
+		this.state.Anubis.methods.selectCard(this.state.account, this.state.myRoomId, i !== 0).send({ from: this.state.account })
+			.once('receipt', (receipt) => {
+				console.log("select card successfully!")
+				console.log(receipt)
+			})
+	}
 
-clickEmoji(i) {
-	console.log("click emoji", i);
-}
+	clickEmoji(i) {
+		console.log("click emoji", i);
+	}
 
-renderMyCard(i, cardType) {
-	return (
-		<Col span={4}>
-			<button type="button" >
-				<img src={cardType} height={cardHeight} width={cardWidth}
-					onClick={() => this.clickCard(i)} alt="card" />
-			</button>
-		</Col>
-	)
-}
+	renderMyCard(i, cardType) {
+		return (
+			<Col span={4}>
+				<button type="button" >
+					<img src={cardType} height={cardHeight} width={cardWidth}
+						onClick={() => this.clickCard(i)} alt="card" />
+				</button>
+			</Col>
+		)
+	}
 
-renderMyEmoji(i) {
-	return (
-		<Col span={4}>
-			<button type="button" >
-				<img src={emojis[i]} height={cardHeight / 1.5} width={cardWidth / 1.3}
-					onClick={() => this.clickEmoji(i)} alt="emoji" />
-			</button>
-		</Col>
-	)
-}
-renderFinish() {
-	return (
-		<Col >
-			<button type="button" >
-				<a href="/main">Finished! Back to KingsLanding.</a>
-			</button>
-		</Col>
-	)
-}
+	renderMyEmoji(i) {
+		return (
+			<Col span={4}>
+				<button type="button" >
+					<img src={emojis[i]} height={cardHeight / 1.5} width={cardWidth / 1.3}
+						onClick={() => this.clickEmoji(i)} alt="emoji" />
+				</button>
+			</Col>
+		)
+	}
+	renderFinish() {
+		return (
+			<Col >
+				<button type="button" >
+					<a href="/main">Finished! Back to KingsLanding.</a>
+				</button>
+			</Col>
+		)
+	}
 
 
-render() {
-	return (
-		<div>
-			<Row justify="space-around">
+	render() {
+		return (
+			<div className="gamecontainer">
+				<div className='bg'></div>
+				<div className='roominformation'>
+					<h2>Enemy: {this.state.enemyNickName}</h2>
+					<h2>Pool Price: {this.state.myPyramid.pyramidHeight}</h2>
+				</div>
+				{/* <Row className="enemy" justify="space-around">
 				<Col span={12} style={{ fontSize: 30 }}>Enemy: {this.state.enemyNickName}</Col>
 				<Col span={8}>
 				</Col>
-				<Col span={4}>
-					<Icon type="hourglass" />
-				</Col>
-			</Row>
-			<h3>Poolprice: {this.state.myPyramid.pyramidHeight}</h3>
-			<h1>Round {this.state.roundx}</h1>
-			<Row type="flex" justify="center">
-				<h1>Enemy Card</h1>
-			</Row>
+			</Row> */}
+				<div className="round">
+				</div>
+				<div className="enemycard">
+					<h1>Round {this.state.roundx}</h1>
+					<h1>Enemy Card</h1>
+					<img src={cardTypes[this.state.roundx === 0 ? 0 : this.state.gameResult === 0 ? 2 : this.state.enemyCard]} height={cardHeight} width={cardWidth} alt="enemyCard" />
+				</div>
+				{/* <Row type="flex" justify="center">
+					<h1>Enemy Card</h1>
+				</Row>
 
-			<Row type="flex" justify="center">
-				<img src={cardTypes[this.state.roundx === 0 ? 0 : this.state.gameResult === 0 ? 2 : this.state.enemyCard]} height={cardHeight} width={cardWidth} alt="enemyCard" />
-			</Row>
+				<Row type="flex" justify="center">
+					<img src={cardTypes[this.state.roundx === 0 ? 0 : this.state.gameResult === 0 ? 2 : this.state.enemyCard]} height={cardHeight} width={cardWidth} alt="enemyCard" />
+				</Row> */}
+				<div className="face">
+					<h1>Face the desitny, choose one card</h1>
+					<h1>remain time: </h1>
+				</div>
+				{/* <Row type="flex" justify="center">
+					<h1>Face the desitny, choose one card</h1>
+				</Row>
+				<Row type="flex" justify="center">
+					<h1>remain time: </h1>
+				</Row> */}
+				<Row type="flex" justify="center">
+					{this.state.cardstate[0] === 0 && this.renderMyCard(0, this.state.isKing ? emperorCard : slaveCard)}
+					{this.state.cardstate[1] === 0 && this.renderMyCard(1, citizenCard)}
+					{this.state.cardstate[2] === 0 && this.renderMyCard(2, citizenCard)}
+					{this.state.cardstate[3] === 0 && this.renderMyCard(3, citizenCard)}
+					{this.state.cardstate[4] === 0 && this.renderMyCard(4, citizenCard)}
+				</Row>
+				<hr />
+				<Row type="flex" justify="center">
+					{this.renderMyEmoji(0)}
+					{this.renderMyEmoji(1)}
+					{this.renderMyEmoji(2)}
+					{this.renderMyEmoji(3)}
+				</Row>
+				<Row type="flex" justify="center">
+					{this.state.gameResult === 1 && <h1>Congratulation You Win !</h1>}
+					{this.state.gameResult === -1 && <h1>Sorry you are loser ~</h1>}
+				</Row>
 
-			<Row type="flex" justify="center">
-				<h1>Face the desitny, please choose one card</h1>
-			</Row>
-			<Row type="flex" justify="center">
-				<h1>remain time: </h1>
-			</Row>
-			<Row type="flex" justify="center">
-				{this.state.cardstate[0] === 0 && this.renderMyCard(0, this.state.isKing ? emperorCard : slaveCard)}
-				{this.state.cardstate[1] === 0 && this.renderMyCard(1, citizenCard)}
-				{this.state.cardstate[2] === 0 && this.renderMyCard(2, citizenCard)}
-				{this.state.cardstate[3] === 0 && this.renderMyCard(3, citizenCard)}
-				{this.state.cardstate[4] === 0 && this.renderMyCard(4, citizenCard)}
-			</Row>
-			<Row type="flex" justify="center">
-				{this.renderMyEmoji(0)}
-				{this.renderMyEmoji(1)}
-				{this.renderMyEmoji(2)}
-				{this.renderMyEmoji(3)}
-			</Row>
-			<Row type="flex" justify="center">
-				{this.state.gameResult===1 && <h1>Congratulation You Win !</h1>}
-				{this.state.gameResult===-1&& <h1>Sorry you are loser ~</h1>}
-			</Row>
-			<Row type="flex" justify="center">
-				{this.state.gameResult !== 0 && this.renderFinish()}
-			</Row>
-		</div>
-	);
-}
+				<hr />
+				<Row type="flex" justify="center">
+					{this.state.gameResult !== 0 && this.renderFinish()}
+				</Row>
+			</div>
+		);
+	}
 }
 
 export default Game;

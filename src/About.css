@@ -1,10 +1,19 @@
 
 .about-container{
     padding: 20px;
+    padding-left: 100px;
+    padding-right: 100px;
+
+    margin: 3%;
+
+    margin-left: 10%;
+    margin-right: 10%;
+     
     border: brown 3px solid;
     background: radial-gradient(80% 80%,#0a0a09 , #2a2b30c4 );
     color: white;
     font-family: 'Noto Sans TC', sans-serif;
     font-weight: bold;
     /* font-display: 'strong'; */
+    font-size: 1.5em;
 }

@@ -100,21 +100,21 @@ class LogIn extends Component {
                     <h3>You can win the world, but<br></br>
                         it is impossible to win the victory unless you dare to battle!</h3>
                     {this.state.nickName2 === '' &&
-                        <form className="nickNameForm" onSubmit={this.onSubmit} style={{ display: 'flex' }}>
-                            <lable style={{display:"block" ,color:"white"}}>Say your name and swear:</lable>
+                        <form className="nickNameForm" onSubmit={this.onSubmit} style={{ }}>
+                            <lable style={{fontSize:'2em', display:"block" ,color:"white"}}>Say your name and swear:</lable>
                             <input
                                 type="text"
                                 name="nickName"
-                                style={{ flex: '10', padding: '5px' }}
-                                placeholder="Add nickName ..."
+                                style={{  margin:'1px',padding: '1px',fontSize:'2em' }}
+                                placeholder="Add your name ... "
                                 // value={this.state.title}
                                 onChange={this.onChange}
                             />
                             <input
                                 type="submit"
-                                value="Submit"
+                                value="I SWEAR"
                                 className="btn2"
-                                style={{ flex: '1' }}
+                                // style={{ flex: '5' }}
                             />
                         </form>}
                     {this.state.nickName2 !== '' && <h3>{this.state.nickName2}: Are you ready to fight??</h3>}
@@ -123,7 +123,7 @@ class LogIn extends Component {
                     {this.state.nickName2 !== '' && <Button type="primary" onClick={() => this.nextPath('/main')}>GO</Button>}
                     {this.state.nickName2 !== '' && <Button type="primary" onClick={() => this.clickCoward()}> No I am a chicken</Button>}
                     {this.state.coward && <h3>You Coward!</h3>}
-                    {this.state.coward && <img src={cowardCard} height={cardHeight} width={cardWidth} alt="coward" />}
+                    {this.state.coward && <img src={cowardCard} height={cardHeight} width={cardWidth} alt="coward" style={{borderColor:'beige',borderWidth:'3px',borderStyle:'solid' }}/>}
                 </div>
             </div>
         )

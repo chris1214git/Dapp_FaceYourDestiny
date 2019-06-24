@@ -1,0 +1,57 @@
+.gamecontainer {
+    position: relative;
+    text-align: center;
+    margin: 10px;
+    padding: 10px;
+    font-family: 'Norican', cursive;
+    
+    padding-bottom: 20px;
+    border: 20px black double;
+    border-radius: 8px;
+    /* overflow: hidden;
+    height: 1100px; */
+}
+
+/* 
+.gamecontainer .bg {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: url("./picture/roma.jpeg") center center;
+    opacity: .9;
+    background-repeat:no-repeat;
+    background-size: contain;
+} */
+
+.roominformation {
+    margin: 10px;
+    padding: 10px;
+    width: 20%;
+    border: 5px black double;
+    background-color: #966F33;
+    border-radius: 8px;
+    position: relative;
+    text-align: left;
+}
+
+.enemycard {
+    margin: 10px;
+    padding: 10px;
+    /* border: 10px black solid; */
+    font-family: 'Norican', cursive;
+}
+
+.face {
+    color: brown;
+    font-family: 'Norican', cursive;
+}
+
+.round {
+    width: 40%;
+    /* float: left; */
+    text-align: center;
+}

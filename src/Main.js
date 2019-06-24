@@ -17,6 +17,7 @@ let formstyle = {
     border: '2px grey solid',  
     backgroundColor: 'lightsteelblue',
     borderRadius: '40%',
+    
 }
 
 class Main extends Component {
@@ -180,7 +181,7 @@ class Main extends Component {
     renderPool(roomName, kingId, poolSize, Fee, key) {
         return (
             <div className="Card" key={key} >
-                <Card width='70%'bordered='false' bodyStyle={{color:'white',backgroundColor:'darkgray'}}headStyle={{color:'gold', backgroundColor:'black'}} title={roomName} extra={ <a style={{color:'gold'}} onClick={() => this.selectBattle(i)} >Battle</a>} style={{ width: 300 }}>
+                <Card width='100%'bordered='false' bodyStyle={{color:'white',backgroundColor:'darkgray', overflow:'hidden'}}headStyle={{color:'gold', backgroundColor:'black'}} title={roomName} extra={ <a style={{color:'gold'}} onClick={() => this.selectBattle(i)} >Battle</a>} style={{ width: 300 }}>
                     {/* <p>Current King: {kings[i]}</p> */}
                     <p>Current King: <br></br>{kingId}</p>
                     <p>Current Poolsize: {poolSize}</p>

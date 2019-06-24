@@ -8,6 +8,10 @@
 .container {
   margin: auto;
   padding-bottom: 20px;
+  border: 20px black double;
+  border-radius: 8px;
+  overflow: hidden;
+  height: 1100px;
 }
 
 .centered {
@@ -35,6 +39,7 @@
   vertical-align: middle;
   line-height: 10em;
   background-image: url("./picture/Iron-throne.jpg");
+  background-size: cover;
   background-position: center center;
 }
 
@@ -43,13 +48,14 @@
 }
 
 .nickNameForm input {
-  width: 20%;
+  /* width: 20%; */
+
+  padding-left: 20px;
+  border-radius: 50px;
 }
 
 .nickNameForm label {
   display: block;
-  /* padding: 8px;
-  width: 100%; */
   color: white;
 }
 
