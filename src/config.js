@@ -1,4 +1,4 @@
-export const Anubis_ADDRESS = '0x62779235e3670cDC7d7653Ca41c692Db51531db0'
+export const Anubis_ADDRESS = '0x03794638AA5EA17929338b9b4C492bb64aB2193F'
 export const Anubis_ABI=[
   {
     "constant": true,
