@@ -1,6 +1,6 @@
 # 2019-06 Web Lab Final Project: Game of Throne
 
-It's a gambling decentralize application base on Ethereum blockchain. We build the smart contract with solidity and Front-end with React.js. Rules are 
+It's a gambling decentralize application base on Ethereum blockchain. We build the smart contract with solidity and Front-end with React.js. You can see the poster.jpg to know how to play or the DEMO video.
 
 
 ## Getting Started
@@ -40,27 +40,9 @@ Ctrl+R: Refresh the contents of the current window
 
 * [Demo video](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
 
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
-
-## Authors
-
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
 ## Acknowledgments
 
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
+* My partner Mr. Liao.
+* Online open source.
 
