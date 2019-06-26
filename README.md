@@ -38,7 +38,7 @@ Ctrl+R: Refresh the contents of the current window
 
 ## How To Work
 
-* [Demo video](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
+* [Demo video](https://www.youtube.com/watch?v=uj_oHupp3aU&fbclid=IwAR3nOi8uJntoQMZbVHc2rqgXwa29uXWfW8D3BBrUrjX9Owk0JOrrbggxXH0) - The web framework used
 
 
 ## Acknowledgments
